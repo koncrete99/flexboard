@@ -1,9 +1,93 @@
+/* SETTINGS */
+/* BASE */
+*,
 html,
 body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
 }
 body {
-  background: #f2f2f2;
+  background: #f6f4f4;
+  color: #221c1c;
   font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+ul,
+ol {
+  list-style: none;
+}
+a:visited {
+  color: #365940;
+}
+a:hover {
+  color: font-color;
+}
+/* LAYOUT */
+main {
+  height: 100%;
+}
+#logo {
+  background: #365940;
+  margin: -15px;
+  padding: 15px;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+#logo span {
+  font-weight: 400;
+}
+#menu {
+  background: #363030;
+  color: #fff;
+  padding: 15px;
+  width: 300px;
+  height: 100%;
+  position: fixed;
+}
+#menu ul {
+  margin: -15px;
+}
+#menu ul li a {
+  display: block;
+  color: #fff;
+  padding: 7.5px 15px;
+}
+#content {
+  height: 100%;
+  margin-left: 300px;
+  padding: 15px;
+}
+#content #kanban {
+  display: flex;
+  height: 100%;
+}
+#content #kanban .column {
+  flex: 1;
+  border-right: 1px solid #e3dddd;
+  height: 100%;
+  padding: 15px;
+  min-width: 300px;
+}
+#content #kanban .column:last-of-type {
+  border: none;
+}
+#content #kanban .column h2 {
+  text-align: center;
+  margin: 0 0 30px;
+}
+#content #kanban .column .task {
+  margin: 15px 0;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 15px;
+  border-radius: 5px;
+  min-height: 100px;
+  cursor: pointer;
+h3
 }
