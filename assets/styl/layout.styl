@@ -1,10 +1,11 @@
 /* SETTINGS */
 
 primary-color = #365940
-bgcolor = #F6F4F4
+body-bgcolor = #F6F4F4
+font-color = #221C1C
 menu-bgcolor = #363030
 menu-color = white
-fontcolor = #221C1C
+
 primary-font = 'Roboto', sans-serif
 gutter-md = 15px
 gutter-lg = 30px
@@ -14,31 +15,45 @@ gutter-lg = 30px
 /* BASE */
 
 *
-html
-body
     margin 0
     padding 0
     box-sizing border-box
 
 html
 body
+    margin 0
+    padding 0
     height 100%  
 
 body
-    background bgcolor
-    color fontcolor
+    background body-bgcolor
+    color font-color
     font-family primary-font
     font-size 16px
 
-ul
-ol
-    list-style none
+h1
+h2
+h3
+    line-height 1    
+
+h1
+    font-size 2rem    
+
+h2
+    font-size 1.5rem
+
+h3
+    font-size 1.3rem    
 
 a
     &:visited
         color primary-color
     &:hover
-        color font-color    
+        color font-color 
+
+ul
+ol
+    list-style none   
 
 /* LAYOUT */
 
@@ -52,6 +67,7 @@ main
     margin-bottom gutter-lg
     font-size 2rem
     font-weight 700
+    height 68px
     span
         font-weight 400
     
@@ -62,6 +78,8 @@ main
     width 300px
     height 100%
     position fixed
+    h3
+        margin 0 0 20px
     ul
         margin -(gutter-md)
         li
@@ -69,35 +87,54 @@ main
                 display block
                 color menu-color
                 padding 7.5px 15px
+                text-decoration none
+                background-color transparent
+                transition background-color .3s
+                &:hover
+                    background-color rgba(255,255,255,.2)    
 
 #content
     height 100%
     margin-left 300px
-    padding gutter-md
 
-    #kanban
-        display flex
+    header
+        background #fff
+        position fixed
+        width 100%
+        height 68px
+        padding gutter-md
+        box-shadow 0 1px 2px rgba(0,0,0,.1)
+
+/* BOARD */        
+
+#kanban
+    display flex
+    height 100%
+    padding-top 68px
+    .column
+        flex 1
+        border-right 1px solid #E3DDDD
         height 100%
-        .column
-            flex 1
-            border-right 1px solid #E3DDDD
-            height 100%
+        padding gutter-md
+        min-width 300px
+        &:last-of-type
+            border none
+        h2
+            text-align center
+            margin 0 0 30px
+        .task
+            margin 15px 0
+            background #fff
+            box-shadow 0 0 10px rgba(0,0,0,.1)   
             padding gutter-md
-            min-width 300px
-            &:last-of-type
-                border none
-            h2
-                text-align center
-                margin 0 0 30px
-            .task
-                margin 15px 0
-                background #fff
-                box-shadow 0 0 10px rgba(0,0,0,.1)   
-                padding gutter-md
-                border-radius 5px
-                min-height 100px
-                cursor pointer
+            border-radius 5px
+            cursor pointer
+            h3
+                color primary-color
+            &.add
                 h3
+                    font-size 2rem
+                    text-align center
 
 
 

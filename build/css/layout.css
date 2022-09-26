@@ -1,14 +1,14 @@
 /* SETTINGS */
 /* BASE */
-*,
-html,
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 html,
 body {
+  margin: 0;
+  padding: 0;
   height: 100%;
 }
 body {
@@ -17,15 +17,29 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }
-ul,
-ol {
-  list-style: none;
+h1,
+h2,
+h3 {
+  line-height: 1;
+}
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.3rem;
 }
 a:visited {
   color: #365940;
 }
 a:hover {
-  color: font-color;
+  color: #221c1c;
+}
+ul,
+ol {
+  list-style: none;
 }
 /* LAYOUT */
 main {
@@ -38,6 +52,7 @@ main {
   margin-bottom: 30px;
   font-size: 2rem;
   font-weight: 700;
+  height: 68px;
 }
 #logo span {
   font-weight: 400;
@@ -50,6 +65,9 @@ main {
   height: 100%;
   position: fixed;
 }
+#menu h3 {
+  margin: 0 0 20px;
+}
 #menu ul {
   margin: -15px;
 }
@@ -57,37 +75,57 @@ main {
   display: block;
   color: #fff;
   padding: 7.5px 15px;
+  text-decoration: none;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+#menu ul li a:hover {
+  background-color: rgba(255,255,255,0.2);
 }
 #content {
   height: 100%;
   margin-left: 300px;
-  padding: 15px;
 }
-#content #kanban {
+#content header {
+  background: #fff;
+  position: fixed;
+  width: 100%;
+  height: 68px;
+  padding: 15px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+/* BOARD */
+#kanban {
   display: flex;
   height: 100%;
+  padding-top: 68px;
 }
-#content #kanban .column {
+#kanban .column {
   flex: 1;
   border-right: 1px solid #e3dddd;
   height: 100%;
   padding: 15px;
   min-width: 300px;
 }
-#content #kanban .column:last-of-type {
+#kanban .column:last-of-type {
   border: none;
 }
-#content #kanban .column h2 {
+#kanban .column h2 {
   text-align: center;
   margin: 0 0 30px;
 }
-#content #kanban .column .task {
+#kanban .column .task {
   margin: 15px 0;
   background: #fff;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   padding: 15px;
   border-radius: 5px;
-  min-height: 100px;
   cursor: pointer;
-h3
+}
+#kanban .column .task h3 {
+  color: #365940;
+}
+#kanban .column .task.add h3 {
+  font-size: 2rem;
+  text-align: center;
 }
