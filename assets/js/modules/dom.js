@@ -9,7 +9,7 @@ const dom = {
         attr = {},
         listeners = {},
         styles = {},
-        onTop = true,
+        onBottom = true,
     } = {}) {
         let newElement = document.createElement(type);
         if (content) newElement.innerHTML = content;
@@ -20,8 +20,8 @@ const dom = {
         Object.entries(styles).forEach(style => newElement.style[style[0]] = style[1]);
     
         if (parent) {
-            if (!onTop && parent.children.length) parent.append(newElement);
-            else parent.prepend(newElement);
+            if (!onBottom && parent.children.length) parent.prepend(newElement);
+            else parent.append(newElement);
         }
     
         return newElement;

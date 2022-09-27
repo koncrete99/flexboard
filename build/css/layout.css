@@ -14,13 +14,16 @@ body {
 body {
   background: #f6f4f4;
   color: #221c1c;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 16px;
+  line-height: 1.3;
+  font-weight: 300;
 }
 h1,
 h2,
 h3 {
   line-height: 1;
+  font-weight: 700;
 }
 h1 {
   font-size: 2rem;
@@ -29,7 +32,7 @@ h2 {
   font-size: 1.5rem;
 }
 h3 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 a:visited {
   color: #365940;
@@ -41,21 +44,39 @@ ul,
 ol {
   list-style: none;
 }
+.hide {
+  opacity: 0;
+}
+.show {
+  opacity: 1;
+}
+button,
+#menu h3 button,
+.task button,
+.addTask button {
+  cursor: pointer;
+  border-radius: 100%;
+  background: transparent center center no-repeat;
+  background-size: 16px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  transition: all 0.5s;
+}
+input,
+textarea {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+}
 /* LAYOUT */
 main {
   height: 100%;
-}
-#logo {
-  background: #365940;
-  margin: -15px;
-  padding: 15px;
-  margin-bottom: 30px;
-  font-size: 2rem;
-  font-weight: 700;
-  height: 68px;
-}
-#logo span {
-  font-weight: 400;
+  position: relative;
 }
 #menu {
   background: #363030;
@@ -64,12 +85,40 @@ main {
   width: 300px;
   height: 100%;
   position: fixed;
+  z-index: 1;
+}
+#menu #logo {
+  background: #365940;
+  margin: -15px;
+  padding: 15px;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: 300;
+  height: 68px;
+}
+#menu #logo span {
+  font-weight: 700;
 }
 #menu h3 {
-  margin: 0 0 20px;
+  position: relative;
+}
+#menu h3 button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #365940;
+  font-weight: 400;
+  color: #fff;
+  font-size: 1.3rem;
+}
+#menu h3 button:hover {
+  background-color: #f6f4f4;
+  color: #363030;
 }
 #menu ul {
   margin: -15px;
+  margin-top: 15px;
 }
 #menu ul li a {
   display: block;
@@ -89,10 +138,28 @@ main {
 #content header {
   background: #fff;
   position: fixed;
-  width: 100%;
+  left: 300px;
+  right: 0;
+  z-index: 1;
   height: 68px;
   padding: 15px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+#content header .projectTitle {
+  padding-right: 100px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+#content header #addColumn {
+  position: absolute;
+  z-index: 2;
+  right: 15px;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  transform: translateY(-50%);
+  background-image: url("../img/icons/table-columns-solid.svg");
+  background-size: 24px;
 }
 /* BOARD */
 #kanban {
@@ -106,26 +173,185 @@ main {
   height: 100%;
   padding: 15px;
   min-width: 300px;
+  max-width: 500px;
+  cursor: move;
 }
 #kanban .column:last-of-type {
   border: none;
 }
-#kanban .column h2 {
-  text-align: center;
-  margin: 0 0 30px;
+#kanban .column .columnHeader {
+  position: relative;
 }
-#kanban .column .task {
+#kanban .column .columnHeader:hover .columnDelete {
+  opacity: 0.5;
+}
+#kanban .column .columnHeader .columnTitle {
+  width: 100%;
+  text-align: center;
+  margin: 10px 0 5px;
+  font-size: 1.5rem;
+}
+#kanban .column .columnHeader .columnDelete {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  background-image: url("../img/icons/trash-can-regular.svg");
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+#kanban .column .columnHeader .columnDelete:hover {
+  opacity: 1;
+}
+#kanban .column .tasks {
+  position: relative;
+}
+/* TASK */
+.task,
+.addTask {
   margin: 15px 0;
   background: #fff;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   padding: 15px;
   border-radius: 5px;
   cursor: pointer;
+  position: relative;
+  transition: opacity 0.5s;
+  user-select: none;
+  cursor: move;
 }
-#kanban .column .task h3 {
-  color: #365940;
+.task.done,
+.addTask.done {
+  opacity: 0.3;
 }
-#kanban .column .task.add h3 {
+.task button,
+.addTask button {
+  position: absolute;
+}
+.task button.taskClose,
+.addTask button.taskClose {
+  right: 15px;
+  top: 15px;
   font-size: 2rem;
+  display: none;
+}
+.task input,
+.addTask input {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 5px;
+  padding-bottom: 3px;
+}
+.task textarea,
+.addTask textarea {
+  font-size: 1rem;
+  resize: none;
+  line-height: 1.3;
+  height: 60px;
+}
+.task p,
+.addTask p {
+  border-top: 1px solid #e3dddd;
+  position: relative;
+  margin: 15px -15px -15px;
+  padding: 10px 15px;
+  font-size: 0.8rem;
+  background: #fff;
+}
+.task p button,
+.addTask p button {
+  opacity: 0.2;
+}
+.task p button:hover,
+.addTask p button:hover {
+  opacity: 1;
+}
+.task p button.taskSave,
+.addTask p button.taskSave {
+  bottom: 2px;
+  right: 2px;
+  background-image: url("../img/icons/floppy-disk-regular.svg");
+}
+.task p button.taskOpen,
+.addTask p button.taskOpen {
+  bottom: 2px;
+  right: 30px;
+  background-image: url("../img/icons/up-right-and-down-left-from-center-solid.svg");
+}
+.task p button.taskDone,
+.addTask p button.taskDone {
+  bottom: 2px;
+  right: 60px;
+  background-image: url("../img/icons/square-check-regular.svg");
+}
+.task p button.taskDelete,
+.addTask p button.taskDelete {
+  bottom: 2px;
+  right: 90px;
+  background-image: url("../img/icons/trash-can-regular.svg");
+}
+.task.open,
+.addTask.open {
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1200px;
+  min-height: 800px;
+  overflow-y: auto;
+  width: 90%;
+  max-height: 90%;
+  margin: 0;
+  cursor: auto;
+}
+.task.open .taskClose,
+.addTask.open .taskClose {
+  display: block;
+}
+.task.open .taskOpen,
+.addTask.open .taskOpen,
+.task.open .taskDone,
+.addTask.open .taskDone,
+.task.open .taskDelete,
+.addTask.open .taskDelete {
+  display: none;
+}
+.task.open input,
+.addTask.open input {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+.task.open textarea,
+.addTask.open textarea {
+  font-size: 1.2rem;
+  height: 400px;
+}
+.task.open p,
+.addTask.open p {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+}
+.addTask {
   text-align: center;
+  color: #365940;
+  font-size: 1.2rem;
+  opacity: 1;
+  cursor: pointer;
+  transform: translateY(0);
+}
+.addTask:hover {
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+  transform: translateY(1px);
+}
+.modal {
+  z-index: 2;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.9);
+  cursor: pointer;
 }

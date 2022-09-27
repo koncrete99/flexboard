@@ -5,8 +5,10 @@ body-bgcolor = #F6F4F4
 font-color = #221C1C
 menu-bgcolor = #363030
 menu-color = white
+border-color = #E3DDDD
 
-primary-font = 'Roboto', sans-serif
+primary-font = 'Nunito', sans-serif
+base-font-size = 16px
 gutter-md = 15px
 gutter-lg = 30px
 
@@ -23,18 +25,21 @@ html
 body
     margin 0
     padding 0
-    height 100%  
+    height 100%
 
 body
     background body-bgcolor
     color font-color
     font-family primary-font
-    font-size 16px
+    font-size base-font-size
+    line-height 1.3
+    font-weight 300
 
 h1
 h2
 h3
-    line-height 1    
+    line-height 1   
+    font-weight 700 
 
 h1
     font-size 2rem    
@@ -43,7 +48,7 @@ h2
     font-size 1.5rem
 
 h3
-    font-size 1.3rem    
+    font-size 1.2rem    
 
 a
     &:visited
@@ -55,21 +60,39 @@ ul
 ol
     list-style none   
 
+.hide
+    opacity 0
+
+.show
+    opacity 1
+
+button
+    cursor pointer
+    border-radius 100%
+    background transparent center center no-repeat
+    background-size 16px
+    width 30px
+    height 30px
+    border none
+    transition all .5s
+
+input
+textarea
+    border none
+    outline none
+    width 100%
+    font-family primary-font
+    background transparent
+    font-family primary-font
+    font-weight 400  
+
 /* LAYOUT */
 
 main
     height 100%
+    position relative
 
-#logo
-    background primary-color
-    margin -(gutter-md)
-    padding gutter-md
-    margin-bottom gutter-lg
-    font-size 2rem
-    font-weight 700
-    height 68px
-    span
-        font-weight 400
+
     
 #menu 
     background menu-bgcolor
@@ -78,10 +101,38 @@ main
     width 300px
     height 100%
     position fixed
+    z-index 1
+
+    #logo
+        background primary-color
+        margin -(gutter-md)
+        padding gutter-md
+        margin-bottom gutter-lg
+        font-size 2rem
+        font-weight 300
+        height 68px
+        span     
+            font-weight 700
+
     h3
-        margin 0 0 20px
+        position relative
+        button
+            @extend button
+            position absolute
+            right 0
+            top 50%
+            transform translateY(-50%)
+            background-color primary-color
+            font-weight 400
+            color menu-color
+            font-size 1.3rem
+            &:hover
+                background-color body-bgcolor
+                color menu-bgcolor
+
     ul
         margin -(gutter-md)
+        margin-top 15px
         li
             a
                 display block
@@ -96,14 +147,31 @@ main
 #content
     height 100%
     margin-left 300px
-
     header
         background #fff
         position fixed
-        width 100%
+        left 300px
+        right 0
+        z-index 1
         height 68px
         padding gutter-md
         box-shadow 0 1px 2px rgba(0,0,0,.1)
+        .projectTitle
+            padding-right 100px
+            font-size 2rem
+            font-weight 700
+        #addColumn
+            position absolute
+            z-index 2
+            right 15px
+            top 50%
+            width 48px
+            height 48px
+            transform translateY(-50%)    
+            background-image url(../img/icons/table-columns-solid.svg)
+            background-size 24px
+
+
 
 /* BOARD */        
 
@@ -113,28 +181,154 @@ main
     padding-top 68px
     .column
         flex 1
-        border-right 1px solid #E3DDDD
+        border-right 1px solid border-color
         height 100%
         padding gutter-md
         min-width 300px
+        max-width 500px
+        cursor move
         &:last-of-type
             border none
-        h2
-            text-align center
-            margin 0 0 30px
-        .task
-            margin 15px 0
-            background #fff
-            box-shadow 0 0 10px rgba(0,0,0,.1)   
-            padding gutter-md
-            border-radius 5px
-            cursor pointer
-            h3
-                color primary-color
-            &.add
-                h3
-                    font-size 2rem
-                    text-align center
+        .columnHeader  
+            position relative
+            &:hover
+                .columnDelete
+                    opacity .5
+            .columnTitle
+                width 100%
+                text-align center
+                margin 10px 0 5px
+                font-size 1.5rem
+            .columnDelete
+                position absolute
+                top -5px
+                right 0
+                background-image url(../img/icons/trash-can-regular.svg)  
+                opacity 0
+                transition opacity .5s
+                &:hover
+                    opacity 1
+        .tasks
+            position relative
+
+/* TASK */   
 
 
+.task
+    margin 15px 0
+    background #fff
+    box-shadow 0 0 10px rgba(0,0,0,.1)   
+    padding gutter-md
+    border-radius 5px
+    cursor pointer
+    position relative
+    transition opacity .5s
+    user-select none
+    cursor move
+    &.done
+        opacity .3
+
+    
+    button 
+        @extend button
+        position absolute
+        &.taskClose
+            right 15px
+            top 15px
+            font-size 2rem   
+            display none
+    input
+        font-size 1.2rem
+        font-weight 700
+        margin 0 0 5px
+        padding-bottom 3px
+    textarea
+        font-size 1rem
+        resize none
+        line-height 1.3
+        height 60px
+    p
+        border-top 1px solid border-color
+        position relative
+        margin 15px -15px -15px
+        padding 10px 15px
+        font-size .8rem
+        background white
+        button
+            opacity .2
+            &:hover
+                opacity 1   
+            &.taskSave
+                bottom 2px
+                right 2px
+                background-image url(../img/icons/floppy-disk-regular.svg)
+            &.taskOpen    
+                bottom 2px
+                right 30px
+                background-image url(../img/icons/up-right-and-down-left-from-center-solid.svg)   
+            &.taskDone
+                bottom 2px
+                right 60px
+                background-image url(../img/icons/square-check-regular.svg)    
+            &.taskDelete
+                bottom 2px
+                right 90px
+                background-image url(../img/icons/trash-can-regular.svg)
+
+    &.open
+        position fixed
+        z-index 3
+        left 50%
+        top 50%
+        transform translate(-50%, -50%)  
+        max-width 1200px
+        min-height 800px
+        overflow-y auto
+        width 90%
+        max-height 90%
+        margin 0
+        cursor auto
+        .taskClose 
+            display block
+        .taskOpen     
+        .taskDone
+        .taskDelete
+            display none
+        input
+            font-size 2rem
+            margin-bottom 30px
+        textarea
+            font-size 1.2rem
+            height 400px
+        p
+            position absolute
+            bottom 15px
+            left 15px
+            right 15px
+
+
+.addTask
+    @extend .task
+    text-align center
+    color primary-color
+    font-size 1.2rem
+    opacity 1
+    cursor pointer
+    transform translateY(0)
+    &:hover
+        box-shadow 0 0 2px rgba(0,0,0,.2) 
+        transform translateY(1px) 
+
+
+.modal
+    z-index 2
+    position fixed
+    left 0
+    top 0
+    right 0
+    bottom 0
+    background rgba(0,0,0,.9)
+    cursor pointer
+    
+                  
 
