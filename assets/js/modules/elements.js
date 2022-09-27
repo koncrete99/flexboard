@@ -11,6 +11,7 @@ const elements = {
     column: dom.$$('.column'),
     addColumn: dom.$('#addColumn'),
     tasks: dom.$$('.tasks'),
+    task: dom.$$('.task'),
 };
 
 export default elements;

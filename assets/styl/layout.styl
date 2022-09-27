@@ -193,23 +193,29 @@ main
             position relative
             &:hover
                 .columnDelete
-                    opacity .5
+                    opacity .5      
             .columnTitle
                 width 100%
                 text-align center
-                margin 10px 0 5px
                 font-size 1.5rem
+                display inline-block
+                border-radius 5px
+                padding 5px
+                color #fff
             .columnDelete
                 position absolute
-                top -5px
-                right 0
-                background-image url(../img/icons/trash-can-regular.svg)  
+                top 50%
+                right 15px
+                transform translateY(-50%)
+                background-image url(../img/icons/trash-can-regular.svg)
+                background-color #fff 
                 opacity 0
                 transition opacity .5s
                 &:hover
                     opacity 1
         .tasks
             position relative
+            min-height 400px
 
 /* TASK */   
 
@@ -226,12 +232,23 @@ main
     user-select none
     cursor move
     &.done
-        opacity .3
+        input
+        textarea
+            opacity .15
+        p
+            span
+                opacity .15
+            .taskDone
+                opacity 1
+    &.drag    
+        border 3px dashed border-color
+        opacity .7
 
     
     button 
         @extend button
         position absolute
+        z-index 1
         &.taskClose
             right 15px
             top 15px
@@ -320,15 +337,18 @@ main
         transform translateY(1px) 
 
 
-.modal
-    z-index 2
+#modal
+    z-index -1
     position fixed
     left 0
     top 0
     right 0
     bottom 0
     background rgba(0,0,0,.9)
-    cursor pointer
+    display none
+    &.show
+        z-index 2
+        display block
     
                   
 
