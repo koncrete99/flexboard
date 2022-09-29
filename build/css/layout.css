@@ -53,7 +53,8 @@ ol {
 button,
 #menu h3 button,
 .task button,
-.addTask button {
+.addTask button,
+#saveData {
   cursor: pointer;
   border-radius: 100%;
   background: transparent center center no-repeat;
@@ -145,7 +146,7 @@ main {
   padding: 15px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
-#content header .projectTitle {
+#content header #projectTitle {
   padding-right: 100px;
   font-size: 2rem;
   font-weight: 700;
@@ -287,28 +288,22 @@ main {
 .addTask p button:hover {
   opacity: 1;
 }
-.task p button.taskSave,
-.addTask p button.taskSave {
-  bottom: 2px;
-  right: 2px;
-  background-image: url("../img/icons/floppy-disk-regular.svg");
-}
 .task p button.taskOpen,
 .addTask p button.taskOpen {
   bottom: 2px;
-  right: 30px;
+  right: 2px;
   background-image: url("../img/icons/up-right-and-down-left-from-center-solid.svg");
 }
 .task p button.taskDone,
 .addTask p button.taskDone {
   bottom: 2px;
-  right: 60px;
+  right: 30px;
   background-image: url("../img/icons/square-check-regular.svg");
 }
 .task p button.taskDelete,
 .addTask p button.taskDelete {
   bottom: 2px;
-  right: 90px;
+  right: 60px;
   background-image: url("../img/icons/trash-can-regular.svg");
 }
 .task.open,
@@ -380,4 +375,15 @@ main {
 #modal.show {
   z-index: 2;
   display: block;
+}
+#saveData {
+  z-index: 1;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #365940;
+  background-image: url("../img/icons/floppy-disk-regular.svg");
+  background-size: 32px;
 }

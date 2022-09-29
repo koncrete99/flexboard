@@ -4,14 +4,17 @@ import dom from './dom.js';
 
 const elements = {
     main: dom.$('main'),
-    modal: dom.$('#modal'),
     addProject: dom.$('#addProject'),
     projectMenu: dom.$('#projectMenu'),
+    projectTitle: dom.$('#projectTitle'),
     kanban: dom.$('#kanban'),
     column: dom.$$('.column'),
+    columnTitle: dom.$$('.columnTitle'),
     addColumn: dom.$('#addColumn'),
     tasks: dom.$$('.tasks'),
     task: dom.$$('.task'),
+    modal: dom.$('#modal'),
+    saveData: dom.$('#saveData'),
 };
 
 export default elements;
