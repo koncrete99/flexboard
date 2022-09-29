@@ -1,12 +1,12 @@
 /* SETTINGS */
 
 primary-color = #365940
+secondary-color = #C14953
 body-bgcolor = #F6F4F4
 font-color = #221C1C
 menu-bgcolor = #363030
 menu-color = white
 border-color = #E3DDDD
-
 primary-font = 'Nunito', sans-serif
 base-font-size = 16px
 gutter-md = 15px
@@ -92,8 +92,6 @@ main
     height 100%
     position relative
 
-
-    
 #menu 
     background menu-bgcolor
     color menu-color
@@ -186,7 +184,6 @@ main
         padding gutter-md
         min-width 300px
         max-width 500px
-        cursor move
         &:last-of-type
             border none
         .columnHeader  
@@ -345,8 +342,24 @@ main
     &.show
         z-index 2
         display block
-    
-               
+
+.message
+    position absolute
+    top 48%
+    left 50%
+    background primary-color
+    color menu-color
+    padding 25px
+    font-size 1.3rem
+    z-index -4
+    transform translateX(-50%,-50%)
+    transition opacity .3s
+    opacity 0
+    box-shadow 0 0 10px rgba(0,0,0,.2) 
+    &.show 
+        z-index 4
+        opacity 1
+ 
 #saveData
     @extend button
     z-index 1
@@ -356,5 +369,13 @@ main
     width 60px
     height 60px
     background-color primary-color
-    background-image url(../img/icons/floppy-disk-regular.svg)
-    background-size 32px
+    background-image url(../img/icons/save.svg)
+    background-size 48px
+    box-shadow 0 0 10px rgba(0,0,0,.2)
+    transition all .5s
+    &:hover
+        background-color secondary-color
+        box-shadow none
+
+
+

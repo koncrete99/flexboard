@@ -175,7 +175,6 @@ main {
   padding: 15px;
   min-width: 300px;
   max-width: 500px;
-  cursor: move;
 }
 #kanban .column:last-of-type {
   border: none;
@@ -376,6 +375,24 @@ main {
   z-index: 2;
   display: block;
 }
+.message {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  background: #365940;
+  color: #fff;
+  padding: 25px;
+  font-size: 1.3rem;
+  z-index: -4;
+  transform: translateX(-50%, -50%);
+  transition: opacity 0.3s;
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.message.show {
+  z-index: 4;
+  opacity: 1;
+}
 #saveData {
   z-index: 1;
   position: fixed;
@@ -384,6 +401,12 @@ main {
   width: 60px;
   height: 60px;
   background-color: #365940;
-  background-image: url("../img/icons/floppy-disk-regular.svg");
-  background-size: 32px;
+  background-image: url("../img/icons/save.svg");
+  background-size: 48px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  transition: all 0.5s;
+}
+#saveData:hover {
+  background-color: #c14953;
+  box-shadow: none;
 }

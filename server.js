@@ -1,5 +1,6 @@
 "use strict";
 
+
 const express = require("express");
 const server = express();
 const MongoClient = require("mongodb").MongoClient;
@@ -11,7 +12,6 @@ server.use(
 	})
 );
 server.use(express.json());
-
 
 // Projekt in Datenbank speichern
 
@@ -56,6 +56,7 @@ server.get("/loadProject", (request, response) => {
 			let query = { pID: 1 };
 			let res = await collection.findOne(query);
 			console.log(res);
+			response.send(res);
 		} catch (err) {
 			console.log(err);
 		} finally {
