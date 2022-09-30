@@ -1,11 +1,10 @@
 "use strict";
 
-
+// Node (NPM) Module werden geladen
 const express = require("express");
 const server = express();
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb+srv://koncrete99:rEmDQKS7XD8q0ymk@koncrete99.zuv0mny.mongodb.net";
-
 server.use(
 	express.static("build", {
 		extensions: ["html"]
@@ -14,7 +13,6 @@ server.use(
 server.use(express.json());
 
 // Projekt in Datenbank speichern
-
 server.post("/saveProject", (request, response) => {
 	MongoClient.connect(url, { useNewUrlParser: true }, (error, client) => {
 		if (error) {
@@ -38,7 +36,6 @@ server.post("/saveProject", (request, response) => {
 });
 
 // Projekt-Daten werden beim Öffnen der Website geladen
-
 server.get("/loadProject", (request, response) => {
 	async function findOne() {
 		let client = await MongoClient.connect(url, {

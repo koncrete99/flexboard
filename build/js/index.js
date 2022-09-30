@@ -4,12 +4,9 @@ import settings from "./modules/settings.js";
 import elements from "./modules/elements.js";
 import dom from "./modules/dom.js";
 
+// Geladene Inhalte werden gerendert
 const renderProject = request => {
-	
 	elements.projectTitle.value = request.title;
-
-	console.log(request);
-
 	request.column.forEach(el => {
 		dom.create({
 			content: `
@@ -24,10 +21,8 @@ const renderProject = request => {
 			parent: elements.kanban
 		});
 	});
-
 	elements.column = dom.$$(".column");
 	elements.columnTitle = dom.$$(".columnTitle");
-
 	request.task.forEach(el => {
 		dom.create({
 			content: `
@@ -35,7 +30,7 @@ const renderProject = request => {
 				<input type="text" value="${el.title}" class="taskTitle">
 				<textarea class="taskDescription">${el.text}</textarea>
 				<p>
-				<span>07.10.2022</span>
+				<input type="date" class="taskDate" value="${el.date}">
 				<button class="taskDelete"></button>
 				<button class="taskDone"></button>
 				<button class="taskOpen"></button>
@@ -47,37 +42,30 @@ const renderProject = request => {
 			
 		});
 	});
-
 	elements.task = dom.$$(".task");
 	elements.tasks = dom.$$(".tasks");
-
 	let columnDelete = dom.$$(".columnDelete");
 	columnDelete.forEach(el => {
 		el.addEventListener("click", evt => {
 			evt.currentTarget.parentNode.parentNode.remove();
 		});
 	});
-
 	let addTask = dom.$$(".addTask");
 	addTask.forEach(el => {
 		el.addEventListener("click", createTask);
 	});
-
-	
 	let taskDelete = dom.$$(".taskDelete");
 	taskDelete.forEach(el => {
 		el.addEventListener("click", evt => {
 			evt.currentTarget.parentNode.parentNode.remove();
 		});
 	});
-
 	let taskDone = dom.$$(".taskDone");
 	taskDone.forEach(el => {
 		el.addEventListener("click", evt => {
 			evt.currentTarget.parentNode.parentNode.classList.toggle("done");
 		});
 	});
-
 	let taskOpen = dom.$$(".taskOpen");
 	taskOpen.forEach(el => {
 		el.addEventListener("click", evt => {
@@ -86,7 +74,6 @@ const renderProject = request => {
 			evt.currentTarget.parentNode.parentNode.classList.add("open");
 		});
 	});
-
 	let taskClose = dom.$$(".taskClose");
 	taskClose.forEach(el => {
 		el.addEventListener("click", evt => {
@@ -95,11 +82,10 @@ const renderProject = request => {
 			evt.currentTarget.parentNode.classList.remove("open");
 		});
 	});
-
 	dragTask();
 };
 
-
+// Erstellen einer neuen Spalte
 const createColumn = evt => {
 	dom.create({
 		content: `
@@ -113,7 +99,6 @@ const createColumn = evt => {
 		classes: ["column"],
 		parent: elements.kanban
 	});
-
 	elements.column = dom.$$(".column");
 	elements.columnTitle = dom.$$(".columnTitle");
 	elements.tasks = dom.$$(".tasks");
@@ -124,15 +109,14 @@ const createColumn = evt => {
 			evt.currentTarget.parentNode.parentNode.remove();
 		});
 	});
-
 	let addTask = dom.$$(".addTask");
 	addTask.forEach(el => {
 		el.addEventListener("click", createTask);
 	});
-
 	dragTask();
 };
 
+// Erstellen eines neuen Task
 const createTask = evt => {
 	dom.create({
 		content: `
@@ -140,7 +124,7 @@ const createTask = evt => {
             <input type="text" value="Neue Aufgabe" class="taskTitle">
             <textarea class="taskDescription">Beschreibung</textarea>
             <p>
-            <span>07.10.2022</span>
+			<input type="date" class="taskDate" value="${settings.currentDate}">
             <button class="taskDelete"></button>
             <button class="taskDone"></button>
             <button class="taskOpen"></button>
@@ -151,23 +135,19 @@ const createTask = evt => {
 		parent: evt.currentTarget.nextElementSibling,
 		onBottom: false
 	});
-
 	elements.task = dom.$$(".task");
-
 	let taskDelete = dom.$$(".taskDelete");
 	taskDelete.forEach(el => {
 		el.addEventListener("click", evt => {
 			evt.currentTarget.parentNode.parentNode.remove();
 		});
 	});
-
 	let taskDone = dom.$$(".taskDone");
 	taskDone.forEach(el => {
 		el.addEventListener("click", evt => {
 			evt.currentTarget.parentNode.parentNode.classList.toggle("done");
 		});
 	});
-
 	let taskOpen = dom.$$(".taskOpen");
 	taskOpen.forEach(el => {
 		el.addEventListener("click", evt => {
@@ -176,7 +156,6 @@ const createTask = evt => {
 			evt.currentTarget.parentNode.parentNode.classList.add("open");
 		});
 	});
-
 	let taskClose = dom.$$(".taskClose");
 	taskClose.forEach(el => {
 		el.addEventListener("click", evt => {
@@ -185,12 +164,11 @@ const createTask = evt => {
 			evt.currentTarget.parentNode.classList.remove("open");
 		});
 	});
-
 	dragTask();
 };
 
+// Drag-Event auf Tasks 
 const dragTask = () => {
-
 	elements.task.forEach(task => {
 		task.addEventListener("dragstart", () => {
 			task.classList.add("drag");
@@ -199,23 +177,20 @@ const dragTask = () => {
 			task.classList.remove("drag");
 		});
 	});
-
 	elements.tasks.forEach(tasks => {
 		tasks.addEventListener("dragover", el => {
 			el.preventDefault();
-			let afterElement = getDragAfterElement(tasks, el.clientY);
+			let nextEl = getNextEl(tasks, el.clientY);
 			let draggable = dom.$(".drag");
-			if (afterElement == null) {
+			if (nextEl == null) {
 				tasks.appendChild(draggable);
 			} else {
-				tasks.insertBefore(draggable, afterElement);
+				tasks.insertBefore(draggable, nextEl);
 			}
 		});
 	});
-
-	const getDragAfterElement = (tasks, y) => {
+	const getNextEl = (tasks, y) => {
 		let dragTasks = [...tasks.querySelectorAll(".task:not(.drag)")];
-
 		return dragTasks.reduce(
 			(closest, child) => {
 				let box = child.getBoundingClientRect();
@@ -231,14 +206,6 @@ const dragTask = () => {
 	};
 };
 
-// Elemente werden zum Speichern der Daten erfasst
-const updateData = () => {
-	elements.column = dom.$$(".column");
-	elements.columnTitle = dom.$$(".columnTitle");
-	elements.tasks = dom.$$(".tasks");
-	elements.task = dom.$$(".task");
-};
-
 // Zeige Meldung wenn Daten geladen oder gespeichert werden
 const showMessage = state => {
 	let message = dom.create({
@@ -252,13 +219,22 @@ const showMessage = state => {
 	}, 1000);
 };
 
+// Elemente werden zum Speichern der Daten erfasst
+const updateData = () => {
+	elements.column = dom.$$(".column");
+	elements.columnTitle = dom.$$(".columnTitle");
+	elements.tasks = dom.$$(".tasks");
+	elements.task = dom.$$(".task");
+};
+
 // Speichern der Daten in die Datenbank
 const saveData = () => {
 
+	// Elemente werden zum Speichern der Daten erfasst
 	updateData();
 
+	// Daten werden zum Speichern aufbereitet
 	let projectTitle = elements.projectTitle.value;
-
 	let columnID = 0;
 	let columnArray = [];
 	let columnObject = {};
@@ -268,7 +244,6 @@ const saveData = () => {
 		columnObject = { title: columnTitle, cID: "c" + columnID };
 		columnArray.push(columnObject);
 	});
-
 	columnID = 0;
 	let taskArray = [];
 	let taskObject = {};
@@ -279,12 +254,15 @@ const saveData = () => {
 		tasks.forEach(task => {
 			let taskTitle = task.querySelector(".taskTitle").value;
 			let taskDesc = task.querySelector(".taskDescription").value;
+			let taskDate = task.querySelector(".taskDate").value;
+			console.log(taskDate)
 			task.classList.contains('done') ? taskState = true : taskState = false;
-			taskObject = { title: taskTitle, text: taskDesc, cID: "c" + columnID, state: taskState };
+			taskObject = { title: taskTitle, text: taskDesc, cID: "c" + columnID, state: taskState, date: taskDate };
 			taskArray.push(taskObject);
 		});
 	});
 
+	// Daten werden in JSON String umgewandelt
 	let projectData = JSON.stringify({
 		title: projectTitle,
 		pID: 1,
@@ -292,6 +270,7 @@ const saveData = () => {
 		task: taskArray
 	});
 
+	// Speichern der Daten per POST-Request
 	fetch("/saveProject", {
 		method: "post",
 		body: projectData,
@@ -302,16 +281,18 @@ const saveData = () => {
 		.catch(console.warn);
 };
 
-
+// Laden der Daten per GET-Request aus der Datenbank
 const loadProject = () => {
 	return fetch("/loadProject").then(response => response.json());
 };
 
+// Eventlisteners 
 const appendEventlisteners = () => {
 	elements.addColumn.addEventListener("click", createColumn);
 	elements.saveData.addEventListener("click", saveData);
 };
 
+// Eventlisteners und Projektdaten werden geladen
 const init = () => {
 	appendEventlisteners();
 	loadProject()
@@ -320,5 +301,5 @@ const init = () => {
 		.catch(console.warn);
 };
 
-// INIT
+// Init
 document.addEventListener("DOMContentLoaded", init);

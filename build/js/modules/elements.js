@@ -13,6 +13,7 @@ const elements = {
     addColumn: dom.$('#addColumn'),
     tasks: dom.$$('.tasks'),
     task: dom.$$('.task'),
+    taskDate: dom.$$('.taskDate'),
     modal: dom.$('#modal'),
     saveData: dom.$('#saveData'),
 };
