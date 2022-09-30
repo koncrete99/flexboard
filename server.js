@@ -4,7 +4,7 @@
 const express = require("express");
 const server = express();
 const MongoClient = require("mongodb").MongoClient;
-const url = "mongodb+srv://koncrete99:rEmDQKS7XD8q0ymk@koncrete99.zuv0mny.mongodb.net";
+const url = "mongodb+srv://<USER>:<PASSWORT>@<MONGODB>.zuv0mny.mongodb.net";
 server.use(
 	express.static("build", {
 		extensions: ["html"]

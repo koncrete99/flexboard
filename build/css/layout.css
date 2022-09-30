@@ -338,8 +338,8 @@ input
 .addTask.open .taskDelete {
   display: none;
 }
-.task.open input,
-.addTask.open input {
+.task.open input[type=text],
+.addTask.open input[type=text] {
   font-size: 2rem;
   margin-bottom: 30px;
 }

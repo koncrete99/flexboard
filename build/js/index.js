@@ -255,7 +255,6 @@ const saveData = () => {
 			let taskTitle = task.querySelector(".taskTitle").value;
 			let taskDesc = task.querySelector(".taskDescription").value;
 			let taskDate = task.querySelector(".taskDate").value;
-			console.log(taskDate)
 			task.classList.contains('done') ? taskState = true : taskState = false;
 			taskObject = { title: taskTitle, text: taskDesc, cID: "c" + columnID, state: taskState, date: taskDate };
 			taskArray.push(taskObject);
